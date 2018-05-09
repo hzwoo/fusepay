@@ -1,0 +1,71 @@
+{
+  "name": "fusepay",
+  "version": "0.0.1",
+  "description": "Fusepay - A payment gateway server implementation",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "config": {
+    "host": "localhost",
+    "port": 3000,
+    "services": {
+      "api": 1,
+      "secapi": 1,
+      "cron": 0,
+      "admin": 0,
+      "merchant": 0,
+      "agent": 0,
+      "installer": 0
+    },
+    "status": "dev",
+    "name": "fusepay-server",
+    "logdir": "logs"
+  },
+  "scripts": {
+    "start": "npm run $npm_package_config_status",
+    "dev": "nodemon server.js",
+    "prod": "pm2 start server.js -name $npm_package_config_name --node-args='--harmony' -i 1",
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hzwoo/fusepay.git"
+  },
+  "author": "hzwoo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hzwoo/fusepay/issues"
+  },
+  "homepage": "https://github.com/hzwoo/fusepay#readme",
+  "dependencies": {
+    "@koa/cors": "^2.2.1",
+    "bunyan": "^1.8.12",
+    "email-templates": "^3.6.0",
+    "exceljs": "^1.4.6",
+    "handlebars": "^4.0.11",
+    "ioredis": "^3.2.2",
+    "jsonwebtoken": "^8.2.1",
+    "knex": "^0.14.6",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-compose": "^4.0.0",
+    "koa-helmet": "^4.0.0",
+    "koa-passport": "^4.0.1",
+    "koa-router": "^7.4.0",
+    "koa-xml-body": "^2.0.0",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "mysql2": "^1.5.3",
+    "node-schedule": "^1.3.0",
+    "nodemailer": "^4.6.4",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "qrcode": "^1.2.0",
+    "raw-body": "^2.3.3",
+    "rbac-a": "^0.2.5",
+    "superagent": "^3.8.3",
+    "superagent-charset": "^1.2.0",
+    "ws": "^5.1.1"
+  }
+}
