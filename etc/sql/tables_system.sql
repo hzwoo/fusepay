@@ -21,7 +21,10 @@ CREATE TABLE IF NOT EXISTS t_system_user (
   time_created DATETIME NOT NULL,
   time_modified DATETIME NOT NULL,
   last_login DATETIME,
-  state VARCHAR(32) NOT NULL DEFAULT '',
+  status VARCHAR(32) NOT NULL DEFAULT 'NORMAL',
+                                    -- NORMAL
+                                    -- SUSPENDED
+                                    -- DELETED
   remark VARCHAR(255),
   PRIMARY KEY (id),
   KEY(username)
@@ -52,14 +55,6 @@ CREATE TABLE IF NOT EXISTS t_system_user_role (
 
 CREATE TABLE IF NOT EXISTS t_system_permission (
   id BIGINT AUTO_INCREMENT NOT NULL,
-  module VARCHAR(40) NOT NULL, -- 所属模块
-                              -- MOD_REGISTER_MANAGEMENT - 进件管理
-                              -- MOD_MERCHANT_MANAGEMENT - 商户管理
-                              -- MOD_CHANNEL_MANAGEMENT - 通道管理
-                              -- MOD_SYSTEM_MANAGEMENT - 系统管理
-                              -- MOD_TRANSACTION_MANAGEMENT - 交易管理
-                              -- MOD_AGENT_MANAGEMENT - 代理商管理
-  module_name VARCHAR(40) NOT NULL,
   domain VARCHAR(128) NOT NULL,
   domain_name VARCHAR(40) NOT NULL,
   resource_id BIGINT NOT NULL,
@@ -72,6 +67,14 @@ CREATE TABLE IF NOT EXISTS t_system_permission (
                                   -- edit - 编辑
                                   -- drop - 删除
   context VARCHAR(512) NOT NULL,
+  module VARCHAR(40), -- 所属模块
+                      -- MOD_REGISTER_MANAGEMENT - 进件管理
+                      -- MOD_MERCHANT_MANAGEMENT - 商户管理
+                      -- MOD_CHANNEL_MANAGEMENT - 通道管理
+                      -- MOD_SYSTEM_MANAGEMENT - 系统管理
+                      -- MOD_TRANSACTION_MANAGEMENT - 交易管理
+                      -- MOD_AGENT_MANAGEMENT - 代理商管理
+  module_name VARCHAR(40),
   hash VARCHAR(32) NOT NULL,
   enabled TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
@@ -81,7 +84,6 @@ CREATE TABLE IF NOT EXISTS t_system_role_permission (
   role_id BIGINT NOT NULL,
   rolename VARCHAR(128) NOT NULL,
   permission_id BIGINT NOT NULL,
-  -- context VARCHAR(512) NOT NULL,
   hash VARCHAR(32) NOT NULL,
   FOREIGN KEY (role_id)
     REFERENCES t_system_role (id)
@@ -95,11 +97,11 @@ CREATE TABLE IF NOT EXISTS t_system_resource (
   id BIGINT NOT NULL,
   domain VARCHAR(128) NOT NULL DEFAULT 'fusepay',
   domain_name VARCHAR(40) NOT NULL,
-  module VARCHAR(40) NOT NULL,
-  module_name VARCHAR(40) NOT NULL,
   resource VARCHAR(255) NOT NULL,
   resource_name VARCHAR(40) NOT NULL,
-  permission VARCHAR(255),
+  module VARCHAR(40),
+  module_name VARCHAR(40),
+  permission VARCHAR(255), -- "{\"list\":1,\"view\":1,\"create\":1,\"edit\":1,\"drop\":1}"
   PRIMARY KEY (id)
 );
 

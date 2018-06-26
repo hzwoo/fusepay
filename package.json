@@ -62,10 +62,13 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "qrcode": "^1.2.0",
+    "qs": "^6.5.2",
     "raw-body": "^2.3.3",
     "rbac-a": "^0.2.5",
     "superagent": "^3.8.3",
     "superagent-charset": "^1.2.0",
-    "ws": "^5.1.1"
+    "ws": "^5.1.1",
+    "xml2json": "^0.11.2",
+    "xmlify": "^1.1.0"
   }
 }

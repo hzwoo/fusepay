@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS t_static_currency (
   KEY(currency)
 );
 
-CREATE TABLE IF NOT EXISTS t_static_industrial_category (
+CREATE TABLE IF NOT EXISTS t_static_business (
   category_id BIGINT NOT NULL AUTO_INCREMENT,
   category_code VARCHAR(4) NOT NULL,
   category_name VARCHAR(40) NOT NULL,

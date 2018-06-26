@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const setup = require('./lib/setup');
 
 /*******************************************
  * logger
@@ -32,6 +33,7 @@ const logger = global.logger = bunyan.createLogger({
   }]
 });
 
+
 /*******************************************
  * init koa
  ******************************************/
@@ -39,7 +41,7 @@ const Koa = require('koa');
 
 const app = new Koa();
 
-app.keys = ['secret@f7918fusepay'];
+app.keys = ['Secret0ffusepay'];
 app.proxy = true;
 
 /*******************************************
@@ -89,7 +91,7 @@ if (!!process.env.npm_package_config_services_installer &&
   JSON.parse(process.env.npm_package_config_services_installer)) {
   router.all('/install*', async function(ctx, next) {
     await compose(
-      require('./lib/controllers/installer/routes.js').middleware
+      require('./lib/controllers/installer/route.js').middleware
     )(ctx, next);
   });
   services.push('installer');
@@ -99,7 +101,7 @@ if (!!process.env.npm_package_config_services_api &&
   JSON.parse(process.env.npm_package_config_services_api)) {
   router.all('/api*', async function(ctx, next) {
     await compose(
-      require('./lib/controllers/api/routes.js').middleware
+      require('./lib/controllers/api/route.js').middleware
     )(ctx, next);
   });
   services.push('api');
@@ -109,7 +111,7 @@ if (!!process.env.npm_package_config_services_secapi &&
   JSON.parse(process.env.npm_package_config_services_secapi)) {
   router.all('/secapi*', async function(ctx, next) {
     await compose(
-      require('./lib/controllers/secapi/routes.js').middleware
+      require('./lib/controllers/secapi/route.js').middleware
     )(ctx, next);
   });
   services.push('secapi');
@@ -119,7 +121,7 @@ if (!!process.env.npm_package_config_services_admin &&
   JSON.parse(process.env.npm_package_config_services_admin)) {
   router.all('/admin*', async function(ctx, next) {
     await compose(
-      require('./lib/controllers/admin/routes.js').middleware
+      require('./lib/controllers/admin/route.js').middleware
     )(ctx, next);
   });
   services.push('admin');
@@ -129,7 +131,7 @@ if (!!process.env.npm_package_config_services_merchant &&
   JSON.parse(process.env.npm_package_config_services_merchant)) {
   router.all('/merchant*', async function(ctx, next) {
     await compose(
-      require('./lib/controllers/merchant/routes.js').middleware
+      require('./lib/controllers/merchant/route.js').middleware
     )(ctx, next);
   });
   services.push('merchant');
@@ -139,7 +141,7 @@ if (!!process.env.npm_package_config_services_agent &&
   JSON.parse(process.env.npm_package_config_services_agent)) {
   router.all('/agent*', async function(ctx, next) {
     await compose(
-      require('./lib/controllers/agent/routes.js').middleware
+      require('./lib/controllers/agent/route.js').middleware
     )(ctx, next);
   });
   services.push('agent');
