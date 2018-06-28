@@ -1,0 +1,34 @@
+{
+  "mysql": {
+    "host": "127.0.0.1",
+    "port": "3306",
+    "database": "fusepay_dev010",
+    "user": "demo",
+    "password": "demo",
+    "connect_limit": 10
+  },
+  "mongodb": {
+    "user": "",
+    "password": "",
+    "host": "127.0.0.1",
+    "port": "27017",
+    "database": "fusepay",
+    "useMongoClient": true,
+    "db": {
+      "native_parser": true
+    },
+    "server": {
+      "poolSize": 5
+    }
+  },
+  "redis": {
+    "host": "localhost",
+    "port": 6379,
+    "db": 0,
+    "password": ""
+  },
+  "websocket": {
+    "path": "/fusepay/ws",
+    "heartbeat_interval": 30
+  }
+}

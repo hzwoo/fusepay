@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS t_system_user (
                                       -- MERCHANT - 商户
                                       -- AGENT - 代理商
                                       -- STAFF - 员工
+                                      -- ADMIN - 管理员
   email VARCHAR(128) NOT NULL DEFAULT '',
   mobile VARCHAR(24) NOT NULL DEFAULT '',
   fullname VARCHAR(40),
@@ -15,6 +16,7 @@ CREATE TABLE IF NOT EXISTS t_system_user (
   group_id VARCHAR(32) NOT NULL DEFAULT 'guest',
   op_user_id VARCHAR(32) NOT NULL,
   is_staff TINYINT(1) NOT NULL DEFAULT 0,
+  is_super TINYINT(1) NOT NULL DEFAULT 0,
   is_email_verified TINYINT(1) NOT NULL DEFAULT 0,
   is_mobile_verified TINYINT(1) NOT NULL DEFAULT 0,
   is_enabled TINYINT(1) NOT NULL DEFAULT 0,
