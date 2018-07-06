@@ -1,4 +1,34 @@
 
+CREATE TABLE IF NOT EXISTS t_member_user (
+  id BIGINT AUTO_INCREMENT NOT NULL,
+  username VARCHAR(128) NOT NULL UNIQUE,
+  password VARCHAR(128) NOT NULL,
+  type VARCHAR(40) NOT NULL DEFAULT 'STAFF', -- 用户类型
+                                      -- MERCHANT - 商户
+                                      -- AGENT - 代理商
+                                      -- STAFF - 员工
+                                      -- ADMIN - 管理员
+  email VARCHAR(128),
+  mobile VARCHAR(24),
+  fullname VARCHAR(40),
+  avatar VARCHAR(255),
+  group_id VARCHAR(32) NOT NULL DEFAULT 'guest',
+  op_user_id VARCHAR(32) NOT NULL,
+  is_email_verified TINYINT(1) NOT NULL DEFAULT 0,
+  is_mobile_verified TINYINT(1) NOT NULL DEFAULT 0,
+  is_enabled TINYINT(1) NOT NULL DEFAULT 0,
+  time_created DATETIME NOT NULL,
+  time_modified DATETIME NOT NULL,
+  last_login DATETIME,
+  status VARCHAR(32) NOT NULL DEFAULT 'NORMAL',
+                                    -- NORMAL
+                                    -- SUSPENDED
+                                    -- DELETED
+  remark VARCHAR(255),
+  PRIMARY KEY (id),
+  KEY(username)
+)AUTO_INCREMENT = 100000;
+
 CREATE TABLE IF NOT EXISTS t_member_membership(
   id BIGINT NOT NULL AUTO_INCREMENT, -- 虚拟户账号
   type VARCHAR(16) NOT NULL,     -- 虚拟户类型: V_COLLECTION -收款虚拟户, "V_CURRENT" -提现虚拟户, "V_DEPOSIT"-专用虚拟户, "V_PROVISION" -备付金虚拟户

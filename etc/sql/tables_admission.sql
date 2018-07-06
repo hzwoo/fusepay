@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS t_admission_merchant(
                                         --   ...
                                         -- ]
   PRIMARY KEY(id)
-)AUTO_INCREMENT = 10000000;
+)AUTO_INCREMENT = 100000;
 
 
 CREATE TABLE IF NOT EXISTS t_admission_merchant_details(
@@ -194,8 +194,7 @@ CREATE TABLE IF NOT EXISTS t_admission_merchant_details(
 
 CREATE TABLE IF NOT EXISTS t_admission_merchant_branch(
   id BIGINT NOT NULL AUTO_INCREMENT,
-  merchant_case_id BIGINT NOT NULL,
-  merchant_id VARCHAR(28) NOT NULL,
+  merchant_id BIGINT NOT NULL,
   merchant_name VARCHAR(128) NOT NULL,
   branch_id VARCHAR(32),
   branch_name VARCHAR(128),
@@ -229,12 +228,12 @@ CREATE TABLE IF NOT EXISTS t_admission_merchant_branch(
                                         --   ...
                                         -- ]
   PRIMARY KEY(id),
-  KEY(merchant_case_id)
+  KEY(merchant_id)
 )AUTO_INCREMENT = 10000000;
 
 CREATE TABLE IF NOT EXISTS t_admission_branch_details(
   id BIGINT NOT NULL,
-  merchant_case_id BIGINT NOT NULL,
+  merchant_id BIGINT NOT NULL,
   submission_method VARCHAR(40) NOT NULL DEFAULT 'BOSS', -- 提交方式
                                 -- WEB
                                 -- WAP
@@ -266,13 +265,12 @@ CREATE TABLE IF NOT EXISTS t_admission_branch_details(
   branch_image3 VARCHAR(255), -- 商户门店照片, 线下商户填
   branch_image4 VARCHAR(255), -- 商户门店照片, 线下商户填
   PRIMARY KEY(id),
-  KEY(merchant_case_id)
+  KEY(merchant_id)
 );
 
 CREATE TABLE IF NOT EXISTS t_admission_channel(
   id BIGINT NOT NULL AUTO_INCREMENT,
-  merchant_case_id BIGINT NOT NULL,
-  merchant_id VARCHAR(28) NOT NULL,
+  merchant_id BIGINT NOT NULL,
   merchant_name VARCHAR(128) NOT NULL,
   case_type VARCHAR(40) NOT NULL DEFAULT 'CHANNEL_REGISTER',
   case_status VARCHAR(40) NOT NULL DEFAULT 'CHANNEL_MATERIAL_PENDING', -- 进件状态
@@ -306,8 +304,8 @@ CREATE TABLE IF NOT EXISTS t_admission_channel(
                                         --   ...
                                         -- ]
   PRIMARY KEY(id),
-  KEY(merchant_case_id)
-)AUTO_INCREMENT = 10000000;
+  KEY(merchant_id)
+)AUTO_INCREMENT = 100001;
 
 
 CREATE TABLE IF NOT EXISTS t_admission_agent(
@@ -348,7 +346,7 @@ CREATE TABLE IF NOT EXISTS t_admission_agent(
                                         --   ...
                                         -- ]
   PRIMARY KEY(id)
-)AUTO_INCREMENT = 10000000;
+)AUTO_INCREMENT = 100001;
 
 
 CREATE TABLE IF NOT EXISTS t_admission_agent_details (

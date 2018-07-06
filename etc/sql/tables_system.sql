@@ -1,16 +1,16 @@
 
 
 CREATE TABLE IF NOT EXISTS t_system_user (
-  id VARCHAR(32) NOT NULL,
+  id BIGINT AUTO_INCREMENT NOT NULL,
   username VARCHAR(128) NOT NULL UNIQUE,
   password VARCHAR(128) NOT NULL,
-  user_type VARCHAR(40) NOT NULL DEFAULT 'STAFF', -- 用户类型
+  type VARCHAR(40) NOT NULL DEFAULT 'STAFF', -- 用户类型
                                       -- MERCHANT - 商户
                                       -- AGENT - 代理商
                                       -- STAFF - 员工
                                       -- ADMIN - 管理员
-  email VARCHAR(128) NOT NULL DEFAULT '',
-  mobile VARCHAR(24) NOT NULL DEFAULT '',
+  email VARCHAR(128),
+  mobile VARCHAR(24),
   fullname VARCHAR(40),
   avatar VARCHAR(255),
   group_id VARCHAR(32) NOT NULL DEFAULT 'guest',
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS t_system_user (
   remark VARCHAR(255),
   PRIMARY KEY (id),
   KEY(username)
-);
+)AUTO_INCREMENT = 100000;
 
 CREATE TABLE IF NOT EXISTS t_system_role (
   id BIGINT AUTO_INCREMENT NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS t_system_permission (
   resource_id BIGINT NOT NULL,
   resource_name VARCHAR(40) NOT NULL,
   resource VARCHAR(255) NOT NULL,
-  operation VARCHAR(40) NOT NULL, -- 访问操作
+  action VARCHAR(40) NOT NULL, -- 访问操作
                                   -- list - 查看列表
                                   -- view - 查看记录
                                   -- create - 创建

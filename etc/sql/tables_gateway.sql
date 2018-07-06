@@ -93,7 +93,8 @@ CREATE TABLE IF NOT EXISTS t_gateway_channel(
   tech_contact_name VARCHAR(60),   -- 技术联系人姓名
   tech_contact_email VARCHAR(100), -- 技术联系人邮箱
   tech_contact_phone VARCHAR(20),  -- 技术联系人电话/手机
-  province VARCHAR(40),
+  state VARCHAR(100),
+  province VARCHAR(100),
   city VARCHAR(100),
   address VARCHAR(255),
   enabled TINYINT(1) NOT NULL DEFAULT 0,
@@ -238,7 +239,7 @@ CREATE TABLE IF NOT EXISTS t_gateway_channel_agent(
   id BIGINT NOT NULL AUTO_INCREMENT,  -- 支付渠道代理ID
   agent_id VARCHAR(28) NOT NULL,      -- 代理商ID
   delegate_id BIGINT NOT NULL,          -- 支付受理ID
-  delegate_alias VARCHAR(128) NOT NULL, -- 支付受理别名
+  delegate_name VARCHAR(128) NOT NULL, -- 支付受理别名
   inherited_rate_enabled TINYINT(1) NOT NULL DEFAULT 0, -- 是否继承费率
   inherited_rate_id BIGINT NOT NULL DEFAULT 0,      -- 继承费率ID
   agent_rate_enabled TINYINT(1) NOT NULL DEFAULT 0, -- 是否配置代理费率
