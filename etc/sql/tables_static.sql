@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS t_static_bankbranch (
   id BIGINT NOT NULL AUTO_INCREMENT,
   bank_code VARCHAR(3) NOT NULL,        -- 银行代码，
   bank_name VARCHAR(40) NOT NULL,       -- 银行名称
-  branch_code VARCHAR(12) NOT NULL,     -- 银行（支行）行号
+  sort_code VARCHAR(12) NOT NULL,     -- 银行（支行）行号
   branch_name VARCHAR(100) NOT NULL,    -- 支行名称
   region_code VARCHAR(4) NOT NULL,      -- 银行地区代码
   PRIMARY KEY(id),

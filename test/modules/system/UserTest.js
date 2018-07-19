@@ -4,26 +4,31 @@
 
 'use strict';
 
+const _ = require('lodash');
 const setup = require('../../../lib/setup');
 const SqlModel = require('../../../lib/models/sql-model');
 const sqlModel = new SqlModel(setup.mysql);
+const utils = setup.utils;
 
 const User = require('../../../lib/modules/system/user');
 const user = new User(sqlModel);
 
 const adminUser = require('../../../etc/scripts/system_user');
 
-// createTest();
+createTest();
 // saveTest();
 // findByIdTest();
 // findByKeyTest();
 // removeTest();
-findTest();
+// findTest();
 
 async function createTest() {
   try {
     console.log(adminUser);
-    await user.setData(adminUser[0])
+    const admin = _.assign({}, adminUser[0]);
+    admin.password = utils.digestPassword(admin.password);
+
+    await user.setData(admin)
       .create();
     console.log(user.getData());
   } catch (err) {

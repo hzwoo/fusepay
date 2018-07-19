@@ -13,7 +13,7 @@
       "api": 1,
       "secapi": 1,
       "cron": 0,
-      "admin": 0,
+      "admin": 1,
       "merchant": 0,
       "agent": 0,
       "installer": 0
@@ -41,6 +41,7 @@
   "dependencies": {
     "@koa/cors": "^2.2.1",
     "bunyan": "^1.8.12",
+    "co": "^4.6.0",
     "email-templates": "^3.6.0",
     "exceljs": "^1.4.6",
     "handlebars": "^4.0.11",

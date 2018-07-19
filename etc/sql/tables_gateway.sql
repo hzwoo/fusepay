@@ -1,70 +1,74 @@
--- 支付产品(产品代码)
--- 100 - WEB - PC网页支付
--- 101 - WAP - 手机WAP支付
--- 102 - QRCODE - 二维码支付（商家被扫）
--- 103 - SCAN - 扫码支付（商家主扫）
--- 104 - JSAPI - 公众号支付
--- 105 - MINA - 小程序支付
--- 106 - APP - APP支付
+-- 产品代码
+-- 100 - RESERVED - 保留
+-- 101 - WEB - PC网页支付
+-- 102 - WAP - 手机WAP支付
+-- 103 - QRCODE - 二维码支付（商家被扫）
+-- 104 - SCAN - 扫码支付（商家主扫）
+-- 105 - JSAPI - 公众号支付
+-- 106 - MINA - 小程序支付
+-- 107 - APP - APP支付
 -- 120 - B2C (B2C Transfer)
 -- 130 - DD (Direct Debit)
 
--- 子产品代码
+-- 产品开发商代码
+-- 100 - RESERVERD - 保留
 -- 101 - ALIPAY - 支付宝
 -- 102 - WXPAY - 微信支付
 -- 103 - QPAY - QQ钱包
 -- 104 - UNIPAY - 银联支付
 
--- 子产品
--- 100000 - PC网页支付，保留
--- 100101 - WEB_ALIPAY
--- 101000 - 手机WAP支付，保留
--- 101101 - WAP_ALIPAY
--- 101102 - WAP_WXPAY
--- 102000 - 二维码支付（被扫），保留
--- 102101 - QRCODE_ALIPAY
--- 102102 - QRCODE_WXPAY
--- 102103 - QRCODE_QPAY
--- 102104 - QRCODE_UNIPAY
--- 103000 - 扫码支付（主扫），保留
--- 103101 - SCAN_ALIAPY
--- 103102 - SCAN_WXPAY
--- 103103 - SCAN_QPAY
--- 103104 - SCAN_UNIPAY
--- 104000 - 公众号支付，保留
--- 104101 - JSAPI_ALIAPY
--- 104102 - JSAPI_WXPAY
--- 104103 - JSAPI_QPAY
--- 104104 - JSAPI_UNIPAY
--- 105000 - 小程序支付， 保留
--- 105101 - MINIAPP_ALIPAY
--- 105102 - MINIAPP_WXPAY
--- 106000 - APP支付， 保留
--- 106101 - APP_ALIPAY
--- 106102 - APP_WXPAY
--- 106103 - APP_QPAY
+-- 聚合代码 （产品代码+子代码）
+-- 101000 - PC网页支付，保留
+-- 101101 - WEB_ALIPAY
+-- 102000 - 手机WAP支付，保留
+-- 102101 - WAP_ALIPAY
+-- 102102 - WAP_WXPAY
+-- 103000 - 二维码支付（被扫），保留
+-- 103101 - QRCODE_ALIPAY
+-- 103102 - QRCODE_WXPAY
+-- 103103 - QRCODE_QPAY
+-- 103104 - QRCODE_UNIPAY
+-- 104000 - 扫码支付（主扫），保留
+-- 104101 - SCAN_ALIAPY
+-- 104102 - SCAN_WXPAY
+-- 104103 - SCAN_QPAY
+-- 104104 - SCAN_UNIPAY
+-- 105000 - 公众号支付，保留
+-- 105101 - JSAPI_ALIAPY
+-- 105102 - JSAPI_WXPAY
+-- 105103 - JSAPI_QPAY
+-- 105104 - JSAPI_UNIPAY
+-- 106000 - 小程序支付， 保留
+-- 106101 - MINIAPP_ALIPAY
+-- 106102 - MINIAPP_WXPAY
+-- 107000 - APP支付， 保留
+-- 107101 - APP_ALIPAY
+-- 107102 - APP_WXPAY
+-- 107103 - APP_QPAY
 -- 120000 - B2C代付，保留
 -- 130000 - 代扣，保留
 
 
 -- 支付产品
 CREATE TABLE IF NOT EXISTS t_gateway_product(
-  id VARCHAR(6) NOT NULL,    -- 支付产品ID, cat_id + sub_id
-  cat_id VARCHAR(3) NOT NULL,
-  cat_name VARCHAR(32) NOT NULL, -- 产品名称
-  cat_desc VARCHAR(32) NOT NULL,  -- 产品描述
-  sub_id VARCHAR(3) NOT NULL,
-  sub_name VARCHAR(32) NOT NULL, -- 子产品名称
-  sub_desc VARCHAR(32) NOT NULL,  -- 子产品描述
-  scene_info VARCHAR(32),         -- 应用场景
-  logo VARCHAR(255),
-  channel_excluded VARCHAR(255), -- 排除通道
-  enabled TINYINT(1) NOT NULL DEFAULT 1,
+  id VARCHAR(6) NOT NULL,             -- 聚合产品ID, sub_id + vendor_id
+  sub_id VARCHAR(3) NOT NULL,        -- 产品代码
+  sub_code VARCHAR(32) NOT NULL,     -- 产品名称
+  sub_name VARCHAR(32) NOT NULL,     -- 产品描述
+  vendor_id VARCHAR(3) NOT NULL,     -- 渠道代码
+  vendor_code VARCHAR(32) NOT NULL,   -- 渠道名称
+  vendor_name VARCHAR(32) NOT NULL,   -- 渠道描述
+  scene_info VARCHAR(32),             -- 应用场景
+  logo VARCHAR(255),                  -- 产品LOGO
+  channel_excluded VARCHAR(255),      -- 排斥渠道
+  enabled TINYINT(1) NOT NULL DEFAULT 1, -- 生效标识
   PRIMARY KEY (id),
-  KEY(sub_name)
+  KEY(prod_id),
+  KEY(sub_id)
 );
 
 -- 支付渠道
+-- Id    Code      Name
 -- 100 - FUSEPAY - 保留
 -- 101 - ALIPAY - 支付宝
 -- 102 - WECHATPAY - 微信支付
@@ -74,9 +78,9 @@ CREATE TABLE IF NOT EXISTS t_gateway_product(
 -- 106 - PINGAN - 平安银行
 
 CREATE TABLE IF NOT EXISTS t_gateway_channel(
-  id VARCHAR(3) NOT NULL,     -- 渠道ID
-  name VARCHAR(32) NOT NULL, -- 渠道编码
-  description VARCHAR(32) NOT NULL, -- 渠道中文描述
+  id VARCHAR(3) NOT NULL,    -- 渠道ID
+  code VARCHAR(32) NOT NULL, -- 渠道代码
+  name VARCHAR(32) NOT NULL, -- 渠道名称
   type VARCHAR(32) NOT NULL,  -- 渠道类型,
                               -- BANK 银行
                               -- NON_BANK_AGENCY 非银行类支付机构
@@ -119,30 +123,30 @@ CREATE TABLE IF NOT EXISTS t_gateway_channel_parameter(
 -- 支付渠道受理
 CREATE TABLE IF NOT EXISTS t_gateway_channel_delegate(
   id BIGINT NOT NULL AUTO_INCREMENT, -- 支付受理ID
-  name VARCHAR(128) NOT NULL,       -- 支付受理别名，channel_name + cat_name + sub_name
-  description VARCHAR(128) NOT NULL,       -- 支付受理标签，channel_desc + cat_desc + sub_desc
+  code VARCHAR(128) NOT NULL,        -- 支付受理代码，channel_code + prod_code + vendor_code
+  name VARCHAR(128) NOT NULL, -- 支付受理名称，channel_name + prod_name + vendor_name
   type VARCHAR(32) NOT NULL,  -- 支付受理类型,
                               -- MERCHNT_DIRECT - 商户直连
                               -- SUPPLIER_DIRECT - 服务商直连
                               -- SUPPLIER_INDIRECT - 服务商间连
                               -- BANK_INDIRECT - 银行间连
-                              -- COOPERATIVE_CLEARING - 归集清分
+                              -- STANDARD_CLEARING - 归集清分
   type_desc VARCHAR(32) NOT NULL, -- 支付受理类型描述,
                               -- MERCHNT_DIRECT - 商户直连
                               -- SUPPLIER_DIRECT - 服务商直连
                               -- SUPPLIER_INDIRECT - 服务商间连
                               -- BANK_INDIRECT - 银行间连
-                              -- COOPERATIVE_CLEARING - 归集清分
+                              -- STANDARD_CLEARING - 归集清分
   channel_id VARCHAR(4) NOT NULL,
   channel_name VARCHAR(32) NOT NULL,
   channel_desc VARCHAR(64) NOT NULL, -- 渠道中文描述
   product_id VARCHAR(6) NOT NULL,
-  cat_id VARCHAR(3) NOT NULL,
-  cat_name VARCHAR(32) NOT NULL,
-  cat_desc VARCHAR(32) NOT NULL,
-  sub_id VARCHAR(3) NOT NULL,
-  sub_name VARCHAR(64) NOT NULL,
-  sub_desc VARCHAR(64) NOT NULL,
+  prod_code VARCHAR(3) NOT NULL,
+  prod_name VARCHAR(32) NOT NULL,
+  prod_desc VARCHAR(32) NOT NULL,
+  vendor_code VARCHAR(3) NOT NULL,
+  vendor_name VARCHAR(64) NOT NULL,
+  vendor_desc VARCHAR(64) NOT NULL,
   rate_enabled TINYINT(1) NOT NULL DEFAULT 0, -- 是否配置费率
   rate_id BIGINT NOT NULL DEFAULT 0,  -- 费率ID
   sp_config_enabled TINYINT(1) NOT NULL DEFAULT 0, -- 是否有服务商配置
@@ -221,7 +225,7 @@ CREATE TABLE IF NOT EXISTS t_gateway_merchant_config(
   time_updated DATETIME NOT NULL,
   state VARCHAR(20) NOT NULL,            -- "TEST"-测试, "LIVE"-上线
   enabled TINYINT(1) NOT NULL DEFAULT 1, -- 启用标志
-  channel_routes TEXT, -- 支付路由，对应t_gateway_merchant_route表中记录
+  channel_routes TEXT, -- 支付路由，对应t_gateway_merchant_route表中记录, JSON格式
   PRIMARY KEY(id),
   KEY(merchant_id)
 );

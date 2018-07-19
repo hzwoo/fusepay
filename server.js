@@ -6,7 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const setup = require('./lib/setup');
+const setup = global.setup = require('./lib/setup');
 
 /*******************************************
  * logger
@@ -77,6 +77,13 @@ app.use(bodyParser());
 const helmet = require('koa-helmet');
 
 app.use(helmet());
+
+
+/***************************************************************
+ * passport for authentication
+ ***************************************************************/
+const passport = require('koa-passport');
+app.use(passport.initialize());
 
 /*******************************************
  * router
