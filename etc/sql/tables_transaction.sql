@@ -3,12 +3,13 @@ CREATE TABLE IF NOT EXISTS t_transaction_order(
   id VARCHAR(32) NOT NULL,                 -- 交易ID
   order_no VARCHAR(32) NOT NULL,           -- 订单号
   batch_no VARCHAR(32),                    -- 系统订单批次号
-  trade_type VARCHAR(40) NOT NULL,         -- 交易类型, 
-                                           -- "SALE":消费
+  transaction_type VARCHAR(40) NOT NULL,   -- 交易类型, 
+                                           -- "PAYMENT":收款
                                            -- "REFUND":退款
                                            -- "TRANSFER":转账/代付
                                            -- "DIRECTDEBIT":代扣
   business_type VARCHAR(40),               -- 业务类型
+                                           -- TRADE - 贸易
                                            -- BUSINESS - 业务往来款（默认）
                                            -- SALARY - 员工工资
                                            -- REIMBURSE - 报销
@@ -17,7 +18,7 @@ CREATE TABLE IF NOT EXISTS t_transaction_order(
                                            -- OTHERS - 其他
   ref_order_no VARCHAR(32),                -- 关联订单号，退款时为原交易订单号
   app_id VARCHAR(32) NOT NULL,             -- 商户应用ID
-  merchant_id VARCHAR(28) NOT NULL,        -- 商户ID
+  merchant_id BIGINT NOT NULL,             -- 商户ID
   branch_id VARCHAR(32),                   -- 商户分支机构ID
   virtual_account_id VARCHAR(32),          -- 收款虚拟户ID
   merchant_order_no VARCHAR(32) NOT NULL,  -- 商户订单号
@@ -121,7 +122,7 @@ CREATE TABLE IF NOT EXISTS t_transaction_clearing_detail(
   id BIGINT NOT NULL AUTO_INCREMENT,        -- 清分增流水
   order_no VARCHAR(32) NOT NULL,            -- 订单号
   trade_type VARCHAR(40) NOT NULL,          -- 交易类型
-  merchant_id VARCHAR(28) NOT NULL,
+  merchant_id BIGINT NOT NULL,
   rate_id BIGINT NOT NULL,                  -- 费率规则ID
   merchant_order_no VARCHAR(32) NOT NULL,   -- 商户订单号
   channel_trade_no VARCHAR(32),             -- 渠道交易单号
@@ -143,7 +144,7 @@ CREATE TABLE IF NOT EXISTS t_transaction_clearing_detail(
 
 CREATE TABLE IF NOT EXISTS t_transaction_clearing_summary(
   id BIGINT NOT NULL AUTO_INCREMENT,        -- 记录增流水
-  merchant_id VARCHAR(28) NOT NULL,         -- 商户ID
+  merchant_id BIGINT NOT NULL,         -- 商户ID
   trade_type VARCHAR(40) NOT NULL,          -- 交易类型
   posting_date BIGINT NOT NULL,             -- 记账日期 格式:20160101
   time_created DATETIME NOT NULL,           -- 创建时间
@@ -159,7 +160,7 @@ CREATE TABLE IF NOT EXISTS t_transaction_commission_detail(
   id BIGINT NOT NULL AUTO_INCREMENT,       -- 对应清分增流水
   order_no VARCHAR(32) NOT NULL,           -- 订单号
   trade_type VARCHAR(40) NOT NULL,         -- 交易类型
-  merchant_id VARCHAR(28) NOT NULL,
+  merchant_id BIGINT NOT NULL,
   agent_id VARCHAR(28),
   channel_rate_id BIGINT NOT NULL,          -- 渠道费率ID
   merchant_rate_id BIGINT NOT NULL,         -- 商户费率ID
@@ -181,7 +182,7 @@ CREATE TABLE IF NOT EXISTS t_transaction_commission_detail(
 CREATE TABLE IF NOT EXISTS t_transaction_commission_summary(
   id BIGINT NOT NULL AUTO_INCREMENT,        -- 记录增流水
   trade_type VARCHAR(40) NOT NULL,          -- 交易类型
-  merchant_id VARCHAR(28) NOT NULL,
+  merchant_id BIGINT NOT NULL,
   agent_id VARCHAR(28),
   posting_date BIGINT NOT NULL,             -- 记账日期 格式:20160101
   time_created DATETIME NOT NULL,           -- 创建时间

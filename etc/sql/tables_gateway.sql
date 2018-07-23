@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS t_gateway_delegate_config(
 
 CREATE TABLE IF NOT EXISTS t_gateway_channel_merchant(
   id BIGINT NOT NULL AUTO_INCREMENT,  -- 支付商户受理ID
-  merchant_id VARCHAR(28) NOT NULL,   -- 商户编号
+  merchant_id BIGINT NOT NULL,   -- 商户编号
   delegate_id BIGINT NOT NULL,
   delegate_name VARCHAR(128) NOT NULL, -- 支付配置别名
   delegate_config_enabled TINYINT(1) NOT NULL DEFAULT 0, -- 是否有服务商配置
@@ -201,10 +201,10 @@ CREATE TABLE IF NOT EXISTS t_gateway_channel_merchant(
   KEY(merchant_id)
 );
 
-CREATE TABLE IF NOT EXISTS t_gateway_merchant_config(
-  id VARCHAR(32) NOT NULL,            -- 商户应用配置ID
-  config_name VARCHAR(128) NOT NULL,     -- 商户应用名称
-  merchant_id VARCHAR(28) NOT NULL,       -- 商户编号
+CREATE TABLE IF NOT EXISTS t_gateway_merchant_application(
+  id VARCHAR(32) NOT NULL,            -- 商户应用ID
+  app_name VARCHAR(128) NOT NULL,  -- 商户应用名称
+  merchant_id BIGINT NOT NULL,       -- 商户编号
   merchant_name VARCHAR(128) NOT NULL,    -- 商户名称
   test_webhook_enabled TINYINT(1) NOT NULL DEFAULT 0,
   live_webhook_enabled TINYINT(1) NOT NULL DEFAULT 0,
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS t_gateway_merchant_config(
   time_created DATETIME NOT NULL,
   time_expire DATETIME NOT NULL,
   time_updated DATETIME NOT NULL,
-  state VARCHAR(20) NOT NULL,            -- "TEST"-测试, "LIVE"-上线
+  status VARCHAR(20) NOT NULL,      -- "TEST"-测试, "LIVE"-上线
   enabled TINYINT(1) NOT NULL DEFAULT 1, -- 启用标志
   channel_routes TEXT, -- 支付路由，对应t_gateway_merchant_route表中记录, JSON格式
   PRIMARY KEY(id),
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS t_gateway_merchant_route(
 
 CREATE TABLE IF NOT EXISTS t_gateway_channel_agent(
   id BIGINT NOT NULL AUTO_INCREMENT,  -- 支付渠道代理ID
-  agent_id VARCHAR(28) NOT NULL,      -- 代理商ID
+  agent_id BIGINT NOT NULL,      -- 代理商ID
   delegate_id BIGINT NOT NULL,          -- 支付受理ID
   delegate_name VARCHAR(128) NOT NULL, -- 支付受理别名
   inherited_rate_enabled TINYINT(1) NOT NULL DEFAULT 0, -- 是否继承费率
