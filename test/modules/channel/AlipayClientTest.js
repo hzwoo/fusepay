@@ -24,10 +24,10 @@ alipay.setPublicKeyByPath(__dirname + '/cert/alipay_rsa_public_key.pem');
 console.log('order_no: ', order_no);
 
 
-// TestTradePrecreate(order_no.toString());
+TestTradePrecreate(order_no.toString());
 // TestTradeCreate(order_no.toString());
 // TestTradePay(order_no.toString());
-TestTradeWapPay(order_no.toString());
+// TestTradeWapPay(order_no.toString());
 // TestTradePagePay(order_no.toString());
 // TestTradeAppPay(order_no.toString());
 // TestTradeQuery(order_no);

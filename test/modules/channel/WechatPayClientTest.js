@@ -37,9 +37,9 @@ wechatpay.setSecureKey(secret);
 console.log('order_no: ', order_no);
 
 
-// TestUnifiedOrder();
+TestUnifiedOrder();
 // TestMicroPay();
-TestOrderQuery(order_no);
+// TestOrderQuery(order_no);
 // TestCloseOrder(order_no);
 // TestRefund();
 // TestRefundQuery();
