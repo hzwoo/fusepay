@@ -10,10 +10,9 @@
     "host": "localhost",
     "port": 3000,
     "services": {
-      "api": 1,
-      "secapi": 1,
-      "cron": 0,
       "admin": 1,
+      "gateway": 1,
+      "cron": 0,
       "merchant": 0,
       "agent": 0,
       "installer": 0

@@ -104,24 +104,14 @@ if (!!process.env.npm_package_config_services_installer &&
   services.push('installer');
 }
 
-if (!!process.env.npm_package_config_services_api &&
-  JSON.parse(process.env.npm_package_config_services_api)) {
-  router.all('/api*', async function(ctx, next) {
-    await compose(
-      require('./lib/controllers/api/route.js').middleware
-    )(ctx, next);
-  });
-  services.push('api');
-}
-
 if (!!process.env.npm_package_config_services_secapi &&
   JSON.parse(process.env.npm_package_config_services_secapi)) {
-  router.all('/secapi*', async function(ctx, next) {
+  router.all('/gateway*', async function(ctx, next) {
     await compose(
-      require('./lib/controllers/secapi/route.js').middleware
+      require('./lib/controllers/gateway/route.js').middleware
     )(ctx, next);
   });
-  services.push('secapi');
+  services.push('gateway');
 }
 
 if (!!process.env.npm_package_config_services_admin &&
